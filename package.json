@@ -7,7 +7,7 @@
     "foreman": "0.0.26"
   },
     "scripts": {
-    "postinstall": "echo postinstall time; ./node_modules/grunt/bin/grunt build"
+    "postinstall": "echo postinstall time; grunt build"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

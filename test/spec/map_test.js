@@ -1,7 +1,7 @@
 'use strict';
 
 var expect = require('chai').expect,
-MapInitializer = require('../../app/scripts/map.js');
+MapInitializer = require('../../app/scripts/map.js').initialize;
 
 describe('Map tests', function(){
 

@@ -14,6 +14,10 @@ app.get('title');
 
 app.use('/', express.static('./dist'));
 
+app.get('/', function(req,res){
+ res.sendfile(__dirname + '../index/app/index.html');
+});
+
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {

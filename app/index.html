@@ -17,6 +17,9 @@
         html, body, #map-canvas { height: 100%; margin:0; padding:0; }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2CVRCqI-iLtJ5_MdAlXxeqe8qU193WuI&libraries=places&sensor=false&callback=google_initialize">
+    </script>   -->
     <script src="scripts/latlon.js"></script>
 
 </head>
@@ -57,16 +60,16 @@
                     <ul class="right">
                         <li class="search">
                             <form>
-                                <input id="start" type="textbox">
-                                <input type="button" value="Start" onclick="codeAddress('start')">
-                            </form>
-
-                            <form>
-                                <input id="end" type="textbox">
-                                <input type="button" value="End" onclick="calcRoute()">
+                                <input id="start" type="textbox" value="511 boren ave, seattle, wa">
                             </form>
                         </li>
 
+                        <li class="search">
+                            <form>
+                                <input id="end" type="textbox" value="19230 94th ave w, edmonds, wa">
+                                <input type="button" value="Go" onclick="calcRoute()">
+                            </form>
+                        </li>
                         <li class="has-button">
                             <a class="small button" href="#">Search</a>
                         </li>

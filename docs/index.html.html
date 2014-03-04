@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.html.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.html.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>&lt;!DOCTYPE html&gt;
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Google Maps and Route Boxer<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"viewport"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"initial-scale=1.0, user-scalable=no"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"styles/foundation.css"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+    <span class="hljs-tag">html</span>, <span class="hljs-tag">body</span>, <span class="hljs-id">#map_canvas</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100</span>%</span></span>;
+    <span class="hljs-rule">}</span></span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lodash.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+
+</span></span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <ul>
+<li>Use the RouteBoxer to get an array of google.maps.LatLngBounds
+objects that cover the route.</li>
+<li>For each of those bounds use the Places library to search for the places.
+   Note: there are query limits and quotas on places requests; for long
+   routes this may not be practical.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">var</span> map = <span class="hljs-literal">null</span>;
+<span class="hljs-keyword">var</span> boxpolys = <span class="hljs-literal">null</span>;
+<span class="hljs-keyword">var</span> directions = <span class="hljs-literal">null</span>;
+<span class="hljs-keyword">var</span> routeBoxer = <span class="hljs-literal">null</span>;
+<span class="hljs-keyword">var</span> distance = <span class="hljs-literal">null</span>; <span class="hljs-comment">// km</span>
+<span class="hljs-keyword">var</span> service = <span class="hljs-literal">null</span>;
+<span class="hljs-keyword">var</span> gmarkers = [];
+<span class="hljs-keyword">var</span> infowindow = <span class="hljs-keyword">new</span> google.maps.InfoWindow();
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Default the map view to the continental U.S.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> mapOptions = {
+        center: <span class="hljs-keyword">new</span> google.maps.LatLng(<span class="hljs-number">38.2806828</span>,-<span class="hljs-number">98.9851309</span>),
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoom: <span class="hljs-number">4</span>
+    };
+
+    map = <span class="hljs-keyword">new</span> google.maps.Map(document.getElementById(<span class="hljs-string">"map"</span>), mapOptions);
+    service = <span class="hljs-keyword">new</span> google.maps.places.PlacesService(map);
+    routeBoxer = <span class="hljs-keyword">new</span> RouteBoxer();
+    directionService = <span class="hljs-keyword">new</span> google.maps.DirectionsService();
+    directionsRenderer = <span class="hljs-keyword">new</span> google.maps.DirectionsRenderer({ map: map });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">route</span><span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Clear any previous route boxes from the map</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        clearBoxes();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Convert the distance to box around the route from miles to km</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        distance = <span class="hljs-built_in">parseFloat</span>(document.getElementById(<span class="hljs-string">"distance"</span>).value) * <span class="hljs-number">1.609344</span>;
+
+        <span class="hljs-keyword">var</span> request = {
+            origin: document.getElementById(<span class="hljs-string">"from"</span>).value,
+            destination: document.getElementById(<span class="hljs-string">"to"</span>).value,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Make the directions request</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        directionService.route(request, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(result, status)</span> {</span>
+            <span class="hljs-keyword">if</span> (status == google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(result);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Box around the overview path of the first route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> path = result.routes[<span class="hljs-number">0</span>].overview_path;
+                <span class="hljs-keyword">var</span> boxes = routeBoxer.box(path, distance);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>alert(boxes.length);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                drawBoxes(boxes);
+                findPlaces(boxes,<span class="hljs-number">0</span>);
+            } <span class="hljs-keyword">else</span> {
+                alert(<span class="hljs-string">"Directions query failed: "</span> + status);
+            }
+        });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Draw the array of boxes as polylines on the map</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">drawBoxes</span><span class="hljs-params">(boxes)</span> {</span>
+  boxpolys = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(boxes.length);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; boxes.length; i++) {
+        boxpolys[i] = <span class="hljs-keyword">new</span> google.maps.Rectangle({
+            bounds: boxes[i],
+            fillOpacity: <span class="hljs-number">0</span>,
+            strokeOpacity: <span class="hljs-number">1.0</span>,
+            strokeColor: <span class="hljs-string">'#000000'</span>,
+            strokeWeight: <span class="hljs-number">1</span>,
+            map: map
+        });
+    }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Find gas stations</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findPlaces</span><span class="hljs-params">(boxes,searchIndex)</span> {</span>
+    <span class="hljs-keyword">var</span> request = {
+        bounds: boxes[searchIndex],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>List of supported types
+<a href="https://developers.google.com/places/documentation/supported_types">https://developers.google.com/places/documentation/supported_types</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        types: [<span class="hljs-string">"bowling_alley"</span>]
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>alert(request.bounds);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    service.radarSearch(request, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(results, status)</span> {</span>
+        <span class="hljs-keyword">if</span> (status != google.maps.places.PlacesServiceStatus.OK) {
+            alert(<span class="hljs-string">"Request["</span>+searchIndex+<span class="hljs-string">"] failed: "</span>+status);
+            <span class="hljs-keyword">return</span>;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>alert(results.length);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        document.getElementById(<span class="hljs-string">'side_bar'</span>).innerHTML += <span class="hljs-string">"bounds["</span>+searchIndex+<span class="hljs-string">"] returns "</span>+results.length+<span class="hljs-string">" results&lt;br&gt;"</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, result; result = results[i]; i++) {
+            <span class="hljs-keyword">var</span> marker = createMarker(result);
+        }
+        searchIndex++;
+        <span class="hljs-keyword">if</span> (searchIndex &lt; boxes.length)
+            findPlaces(boxes,searchIndex);
+    });
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Clear boxes currently on the map</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>function clearBoxes() {
+    if (boxpolys != null) {
+        for (var i = 0; i &lt; boxpolys.length; i++) {
+          boxpolys[i].setMap(null);
+        }
+    }
+    boxpolys = null;
+}
+
+function createMarker(place){
+  var placeLoc=place.geometry.location;
+    if (place.icon) {
+        var image = new google.maps.MarkerImage(
+          place.icon, new google.maps.Size(71, 71),
+          new google.maps.Point(0, 0), new google.maps.Point(17, 34),
+          new google.maps.Size(25, 25));
+    } else var image = null;
+
+    var marker=new google.maps.Marker({
+        map:map,
+        icon: image,
+        position:place.geometry.location
+    });
+    var request =  {
+        reference: place.reference
+    };
+    google.maps.event.addListener(marker,'click',function(){
+        service.getDetails(request, function(place, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                var contentStr = '&lt;h5&gt;'+place.name+'&lt;/h5&gt;&lt;p&gt;'+place.formatted_address;
+                if (!!place.formatted_phone_number) contentStr += '&lt;br&gt;'+place.formatted_phone_number;
+                if (!!place.website) contentStr += '&lt;br&gt;&lt;a target="_blank" href="'+place.website+'"&gt;'+place.website+'&lt;/a&gt;';
+                contentStr += '&lt;br&gt;'+place.types+'&lt;/p&gt;';
+                infowindow.setContent(contentStr);
+                infowindow.open(map,marker);
+                } else {
+                var contentStr = "&lt;h5&gt;No Result, status="+status+"&lt;/h5&gt;";
+                infowindow.setContent(contentStr);
+                infowindow.open(map,marker);
+            }
+        });
+
+    });
+    gmarkers.push(marker);
+    var side_bar_html = "&lt;a href='javascript:google.maps.event.trigger(gmarkers["+parseInt(gmarkers.length-1)+"],\"click\");'&gt;"+place.name+"&lt;/a&gt;&lt;br&gt;";
+    document.getElementById('side_bar').innerHTML += side_bar_html;
+  }
+      &lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body onload="initialize();"&gt;
+  &lt;div class="row"&gt;
+  &lt;div class="large-12 columns"&gt;
+  &lt;div class="row"&gt;
+  &lt;div class="large-12 columns"&gt;
+    &lt;!-- Navigation --&gt;
+    &lt;nav class="top-bar"&gt;
+      &lt;ul class="title-area"&gt;
+        &lt;!-- Title Area --&gt;
+        &lt;li class="name"&gt;
+          &lt;h1&gt;
+            &lt;a href="#"&gt;
+              Top Bar Title
+            &lt;/a&gt;
+          &lt;/h1&gt;
+        &lt;/li&gt;
+        &lt;li class="toggle-topbar menu-icon"&gt;
+          &lt;a href="#"&gt;
+            &lt;span&gt;menu&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;section class="top-bar-section"&gt;
+        &lt;ul class="left"&gt;
+          &lt;li&gt;
+            &lt;a href="#"&gt;Link 1&lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;ul class="right"&gt;
+          &lt;li class="search"&gt;
+            &lt;form&gt;
+              &lt;input type="textbox" id="from" value="From"/&gt;
+            &lt;/form&gt;
+          &lt;/li&gt;
+          &lt;li class="search"&gt;
+            &lt;form&gt;
+              &lt;input type="textbox" id="to" value="To"/&gt;
+            &lt;/form&gt;
+          &lt;li class="search"&gt;
+            &lt;form&gt;
+              &lt;input type="textbox" id="distance" value="30" size="2"&gt;
+              &lt;input type="button" value="Go" onclick="route()"&gt;
+            &lt;/form&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/section&gt;
+    &lt;/nav&gt;
+      &lt;!-- End Navigation --&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td valign="top"&gt;
+      &lt;div id="map" style="width: 600px; height: 500px;"&gt;&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;div id="side_bar" style="display:none"&gt;&lt;/div&gt;
+      &lt;!-- &lt;div id="side_bar"&gt;&lt;/div&gt; --&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

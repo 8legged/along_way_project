@@ -224,6 +224,14 @@ module.exports = function (grunt) {
                 }]
             }
         },
+        docco: {
+            debug: {
+                src: ['test/**/*.js'],
+                options: {
+                    output: 'docs/'
+                }
+            }
+        },
         copy: {
             dist: {
                 files: [{
